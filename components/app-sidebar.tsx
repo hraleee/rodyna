@@ -47,33 +47,18 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
       icon: LayoutDashboardIcon,
     },
     {
-      title: "Candidati",
-      url: "/candidati",
+      title: "Chi siamo",
+      url: "/chi-siamo",
       icon: IconaCandidati,
     },
     {
-      title: "Annunci",
-      url: "/annunci",
-      icon: IconaAnnunci,
-    },
-    {
-      title: "Calendario",
-      url: "/calendario",
-      icon: IconaCalendario,
-    },
-    {
-      title: "Gestione Utenti",
+      title: "Contattaci",
       icon: IconaUtenti,
-      url: "/utenti/azienda",
+      url: "/contattaci",
     },
   ];
 
   const navSecondary = [
-    {
-      title: "Impostazioni",
-      url: "/impostazioni",
-      icon: SettingsIcon,
-    },
     {
       title: "Get Help",
       url: "/get-help",
@@ -90,46 +75,14 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
               asChild
               className="pointer-events-none data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <div className="flex items-center !pl-0 !ml-0">
-                <span className="text-base text-white font-semibold">
-                  <svg
-                    width="200"
-                    height="80"
-                    viewBox="0 0 200 80"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect width="300" height="80" fill="rgb(10,31,68)" />
-                    <g
-                      transform="translate(20,20)"
-                      stroke="white"
-                      strokeWidth="3"
-                      fill="none"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx="20" cy="20" r="15" />
-                      <path d="M10 20c0-5 10-10 20-10" />
-                      <path d="M30 20c0 5-10 10-20 10" />
-                      <line x1="20" y1="5" x2="20" y2="35" />
-                      <line x1="5" y1="20" x2="35" y2="20" />
-                    </g>
-                    <text
-                      x="70"
-                      y="48"
-                      fill="white"
-                      fontFamily="Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
-                      fontSize="16"
-                      fontWeight="600"
-                    >
-                      Rodyna
-                    </text>
-                  </svg>
-                </span>
+              <div className="flex items-center justify-center w-full h-20 text-white font-bold text-3xl">
+                RODYNA
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent className="bg-primaryBlue">
         <NavMain items={navMain} className="text-white" />
         <NavSecondary items={navSecondary} className="mt-auto text-white" />
