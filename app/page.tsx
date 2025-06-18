@@ -3,9 +3,16 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapStore } from "@/components/MapStore";
+import dynamic from "next/dynamic";
 
-export default function Page() {
+const MapStore = dynamic(
+  () => import("@/components/MapStore").then((mod) => mod.MapStore),
+  {
+    ssr: false,
+  }
+);
+
+export default function Home() {
   const categories = [
     { title: "Salumi & Formaggi", img: "/prodotti/salumi.jpg" },
     { title: "Pane & Dolci", img: "/prodotti/dolci.jpg" },
@@ -57,6 +64,7 @@ export default function Page() {
               </p>
             </CardContent>
           </Card>
+
           {/* Categorie di prodotti */}
           <Card className="px-4 py-6 sm:p-6">
             <CardContent>
@@ -90,7 +98,26 @@ export default function Page() {
           <Card className="px-4 py-6 sm:p-6">
             <CardContent>
               <h2 className="text-2xl font-semibold mb-4">Dove ci trovi</h2>
-              <MapStore />
+              <div className="rounded-xl overflow-hidden shadow-lg">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.798390964771!2d14.39331621567924!3d40.904545379313655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133ba9d6bb40db87%3A0xa7dbbd25a032fcde!2sVia%20Trieste%2C%2092%2C%2080000%20Pomigliano%20d'Arco%20NA!5e0!3m2!1sit!2sit!4v1718710025475!5m2!1sit!2sit"
+                  width="100%"
+                  height="400"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+              <p className="text-sm text-blue-600 mt-2">
+                <a
+                  href="https://www.google.com/maps?ll=40.904552,14.395128&z=19&t=m&hl=it&gl=IT&mapclient=embed&cid=5086467851719980605"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apri in Google Maps
+                </a>
+              </p>
             </CardContent>
           </Card>
         </main>

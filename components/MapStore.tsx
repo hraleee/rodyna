@@ -1,10 +1,11 @@
-"use client";
+"use client"; // MOLTO importante
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useEffect, useState } from "react";
 
-// Fix per icone mancanti (con tipizzazione corretta)
+// Fix icone leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "/leaflet/marker-icon-2x.png",
@@ -13,9 +14,16 @@ L.Icon.Default.mergeOptions({
 });
 
 export function MapStore() {
+    const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
   return (
     <MapContainer
-      center={[40.90455, 14.39552]} // coordinate precise da te fornite
+      center={[40.90455, 14.39552]}
       zoom={20}
       scrollWheelZoom={false}
       style={{ height: "400px", width: "100%", borderRadius: "1rem" }}
