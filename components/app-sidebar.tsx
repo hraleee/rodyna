@@ -70,22 +70,23 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader className="bg-primaryBlue">
+      <SidebarHeader className="bg-[#1a237e]">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
               className="pointer-events-none data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <div className="flex items-center justify-center w-full h-20 text-white font-bold text-3xl">
+              <div className="flex items-center justify-center w-full h-20 font-bold text-3xl text-white select-none">
                 RODYNA
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <div className="w-full h-1 bg-white/40" />
       </SidebarHeader>
 
-      <SidebarContent className="bg-primaryBlue">
+      <SidebarContent className="bg-[#1a237e]">
         <NavMain items={navMain} className="text-white" />
         <NavSecondary items={navSecondary} className="mt-auto text-white" />
       </SidebarContent>
