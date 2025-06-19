@@ -14,6 +14,8 @@ import {
   SettingsIcon,
 } from "lucide-react";
 
+import { MessageCircleIcon } from "lucide-react";
+
 import {
   ClipboardDocumentListIcon as IconaCandidati,
   ChartBarIcon as IconaAnnunci,
@@ -49,12 +51,12 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
     {
       title: "Chi siamo",
       url: "/chi-siamo",
-      icon: IconaCandidati,
+      icon: IconaUtenti,
     },
     {
       title: "Contattaci",
-      icon: IconaUtenti,
       url: "/contattaci",
+      icon: MessageCircleIcon,
     },
   ];
 

@@ -6,6 +6,7 @@ import "./globals.css";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { Footer } from "@/components/Footer/footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,7 +38,7 @@ export default function RootLayout({
           <AppSidebar className="bg-primaryBlue" />
           <SidebarInset>
             <SiteHeader />
-            {children}
+            <main className="flex-grow">{children}</main> <Footer />
           </SidebarInset>
         </SidebarProvider>
       </body>
