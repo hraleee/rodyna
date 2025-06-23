@@ -6,6 +6,8 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Card, CardContent } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { SatisfactionTable } from "@/components/SatisfactionTable/satisfactionTable";
+import ProgressBars from "@/components/ProgressBars/progressBars";
 
 const MapStore = dynamic(
   () => import("@/components/MapStore").then((mod) => mod.MapStore),
@@ -47,7 +49,16 @@ export default function Home() {
           </div>
         </div>
       </motion.div>
-
+      
+      {/* Statistiche clienti soddisfatti */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
+        <SatisfactionTable />
+      </motion.div>
       {/* Divider decorativo */}
       <div className="flex justify-center my-2">
         <div className="w-32 h-1 rounded-full bg-gradient-to-r from-primaryBlue via-pink-300 to-yellow-300 opacity-60" />
@@ -155,7 +166,7 @@ export default function Home() {
                   desc: "Scopri la nostra selezione di dolci tipici dalla Georgia, freschi ogni settimana.",
                   icon: (
                     <svg className="w-8 h-8 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12.1 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54l-1.35 1.31z"/>
+                      <path d="M12.1 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54l-1.35 1.31z" />
                     </svg>
                   ),
                   highlight: "Novità!",
