@@ -34,6 +34,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 
@@ -70,7 +71,7 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader className="bg-[#1a237e]">
+      <SidebarHeader className="bg-[#1a237e] sticky top-0 z-10">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton

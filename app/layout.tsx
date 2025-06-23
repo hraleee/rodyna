@@ -5,7 +5,7 @@ import "./globals.css";
 
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Footer } from "@/components/Footer/footer";
 
 const geistSans = localFont({
@@ -35,6 +35,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SidebarProvider>
+          {/* Header mobile sticky con hamburger */}
+          <div className="fixed top-0 left-0 z-30 w-full bg-[#1a237e] h-16 flex items-center justify-between px-4 md:hidden">
+            <span className="text-white font-bold text-2xl select-none">RODYNA</span>
+            <SidebarTrigger className="bg-white text-[#1a237e] rounded-full shadow" />
+          </div>
+          {/* Spazio per non coprire il contenuto */}
+          <div className="h-16 md:hidden" />
           <AppSidebar className="bg-primaryBlue" />
           <SidebarInset>
             <SiteHeader />
