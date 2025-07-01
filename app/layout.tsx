@@ -7,7 +7,6 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Footer } from "@/components/Footer/footer";
-import { GoogleAnalytics } from "@/components/Google-analytics/google-analytics";
 import Script from "next/script";
 
 
@@ -51,7 +50,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-<noscript>
+ <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-T5TXTXQK"
             height="0"
