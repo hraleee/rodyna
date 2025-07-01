@@ -7,6 +7,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Footer } from "@/components/Footer/footer";
+import Analytics from "@/components/Analytics/analytics";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,26 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-       <head>
-        {/* Google Analytics script */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZW5XQSDEQ"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-4ZW5XQSDEQ');
-            `,
-          }}
-        />
-      </head>
-
       
-
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Analytics />
         <SidebarProvider>
           {/* Header mobile sticky con hamburger */}
           <div className="fixed top-0 left-0 z-30 w-full bg-[#1a237e] h-16 flex items-center justify-between px-4 md:hidden">
