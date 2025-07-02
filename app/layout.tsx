@@ -49,13 +49,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <noscript>
+        {/* <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T5TXTXQK" 
           height="0" 
           width="0" 
           style={{display: "none", visibility: "hidden"}}>      
           </iframe>
-        </noscript>
+        </noscript> */}
         
         <SidebarProvider>
           {/* Header mobile sticky con hamburger */}
