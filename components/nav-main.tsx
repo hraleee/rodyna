@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { type LucideIcon } from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar";
 
 import {
   SidebarGroup,
@@ -29,6 +30,7 @@ export function NavMain({
 }) {
   const pathname = usePathname();
   const [openItem, setOpenItem] = useState<string | null>(null);
+  const { isMobile, setOpenMobile } = useSidebar();
 
   useEffect(() => {
     const activeParent = items.find((item) =>
@@ -57,22 +59,28 @@ export function NavMain({
 
             return (
               <div key={item.title}>
-                {
-                  <Link href={item.url ?? ""}>
-                    <SidebarMenuItem
-                      className={`${
-                        pathname === item.url
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                          : ""
-                      } rounded-lg`}
-                    >
-                      <SidebarMenuButton tooltip={item.title}>
-                        {item.icon && <item.icon />}
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </Link>
-                }
+                <Link
+                  href={item.url ?? ""}
+                  onClick={() => {
+                    if (isMobile) {
+                      setOpenMobile(false);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                  }}
+                >
+                  <SidebarMenuItem
+                    className={`${
+                      pathname === item.url
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                        : ""
+                    } rounded-lg`}
+                  >
+                    <SidebarMenuButton tooltip={item.title}>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </Link>
               </div>
             );
           })}

@@ -8,6 +8,10 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { SatisfactionTable } from "@/components/SatisfactionTable/satisfactionTable";
 import ProgressBars from "@/components/ProgressBars/progressBars";
+import { useTranslation } from "react-i18next";
+import LoaderPulseCircle from "@/components/Loader/loader-motion";
+import { useEffect, useState } from "react";
+
 
 const MapStore = dynamic(
   () => import("@/components/MapStore").then((mod) => mod.MapStore),
@@ -26,6 +30,17 @@ export default function Home() {
     { title: "Snack & Specialità", img: "/snack.jpg" },
   ];
 
+  const { t, i18n } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+  const supported = ["it", "ua", "ro", "pl"];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  // Mostra loader finché non è montato o la lingua non è supportata
+  if (!mounted || !supported.includes(i18n.language)) {
+    return <LoaderPulseCircle />;
+  }
   return (
     <main className="flex flex-col gap-12 py-12 px-4 md:px-8 max-w-5xl mx-auto bg-gradient-to-br from-blue-50 via-white to-pink-50 rounded-3xl shadow-xl">
       {/* Hero Image */}
@@ -74,7 +89,7 @@ export default function Home() {
         <Card className="px-4 py-8 sm:p-10 bg-white/80 backdrop-blur-md border-0 shadow-lg">
           <CardContent className="space-y-4">
             <h2 className="text-2xl sm:text-3xl font-bold text-primary">
-              Un viaggio gastronomico tra tradizione e autenticità
+            {t("home_hero_title")}
             </h2>
             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
               Siamo un punto di riferimento per chi cerca prodotti genuini,

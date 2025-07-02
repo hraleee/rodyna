@@ -11,10 +11,11 @@ import {
 } from "@/components/ui/accordion";
 import { userFaqs } from "@/lib/mock";
 import { Search } from "lucide-react";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher/languageSwitcher";
 
 export default function Page() {
   return (
-    <section className="w-full min-h-screen bg-gradient-to-br from-blue-50 to-white flex flex-col items-center py-10 px-2">
+    <section className="relative w-full min-h-screen bg-gradient-to-br from-blue-50 to-white flex flex-col items-center py-10 px-2">
       <div className="flex flex-col items-center mb-8">
         <div className="bg-primaryBlue/90 rounded-full p-4 shadow-lg mb-4">
           <Search className="text-white w-8 h-8" />
