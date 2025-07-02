@@ -11,6 +11,7 @@ import { Footer } from "@/components/Footer/footer";
 import Script from "next/script";
 import CookieBanner from "@/components/Google/cookie-banner";
 import GoogleAnalytics from "@/components/Google/google-analytics";
+import { Suspense } from "react";
 
 
 const geistSans = localFont({
@@ -49,7 +50,9 @@ export default function RootLayout({
           gtag('config', 'G-4ZW5XQSDEQ');
         `}
       </Script> */}
-     <GoogleAnalytics GA_MEASUREMENT_ID="G-4ZW5XQSDEQ" />
+     <Suspense fallback={null}>
+        <GoogleAnalytics GA_MEASUREMENT_ID='G-1234567890' />
+      </Suspense>
      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
