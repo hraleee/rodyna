@@ -1,4 +1,5 @@
 // app/layout.tsx
+"use client";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -8,6 +9,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Footer } from "@/components/Footer/footer";
 import Script from "next/script";
+import CookieBanner from "@/components/Google/cookie-banner";
+import GoogleAnalytics from "@/components/Google/google-analytics";
 
 
 const geistSans = localFont({
@@ -22,9 +25,9 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Rodyna",
-};
+// export const metadata: Metadata = {
+//   title: "Rodyna",
+// };
 
 export default function RootLayout({
   children,
@@ -32,9 +35,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+    >
      <head>
-      <Script
+      {/* <Script
       src={`https://www.googletagmanager.com/gtag/js?id=G-4ZW5XQSDEQ`}
       strategy="afterInteractive" />
       <Script id="google-analytics" strategy="afterInteractive">
@@ -44,7 +48,8 @@ export default function RootLayout({
           gtag('js', new Date());
           gtag('config', 'G-4ZW5XQSDEQ');
         `}
-      </Script>
+      </Script> */}
+     <GoogleAnalytics GA_MEASUREMENT_ID="G-4ZW5XQSDEQ" />
      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -56,7 +61,7 @@ export default function RootLayout({
           style={{display: "none", visibility: "hidden"}}>      
           </iframe>
         </noscript> */}
-        
+       
         <SidebarProvider>
           {/* Header mobile sticky con hamburger */}
           <div className="fixed top-0 left-0 z-30 w-full bg-[#1a237e] h-16 flex items-center justify-between px-4 md:hidden">
@@ -71,6 +76,7 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main> <Footer />
           </SidebarInset>
         </SidebarProvider>
+        <CookieBanner />
       </body>
     </html>
   );

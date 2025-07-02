@@ -8,7 +8,6 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { SatisfactionTable } from "@/components/SatisfactionTable/satisfactionTable";
 import ProgressBars from "@/components/ProgressBars/progressBars";
-import Script from "next/script";
 
 const MapStore = dynamic(
   () => import("@/components/MapStore").then((mod) => mod.MapStore),
@@ -28,22 +27,8 @@ export default function Home() {
   ];
 
   return (
-    
     <main className="flex flex-col gap-12 py-12 px-4 md:px-8 max-w-5xl mx-auto bg-gradient-to-br from-blue-50 via-white to-pink-50 rounded-3xl shadow-xl">
       {/* Hero Image */}
-      <head>
-      <Script
-      src={`https://www.googletagmanager.com/gtag/js?id=G-4ZW5XQSDEQ`}
-      strategy="afterInteractive" />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-4ZW5XQSDEQ');
-        `}
-      </Script>
-     </head>
       <motion.div
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
