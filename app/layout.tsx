@@ -12,6 +12,8 @@ import Script from "next/script";
 import CookieBanner from "@/components/Google/cookie-banner";
 import GoogleAnalytics from "@/components/Google/google-analytics";
 import { Suspense } from "react";
+import { Sheet, SheetHeader, SheetDescription, SheetTitle, SheetContent } from "@/components/ui/sheet";
+import { useState } from "react";
 
 
 const geistSans = localFont({
@@ -79,7 +81,34 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main> <Footer />
           </SidebarInset>
         </SidebarProvider>
-        <CookieBanner />
+        {(() => {
+          const [open, setOpen] = useState(false);
+          return <>
+            <CookieBanner onInfoClick={() => setOpen(true)} />
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetContent side="right">
+                <SheetHeader>
+                  <SheetTitle>Cookie Policy</SheetTitle>
+                  <SheetDescription>
+                    Questa Cookie Policy spiega cosa sono i cookie e come li usiamo. Utilizziamo i cookie per migliorare l'esperienza utente, analizzare il traffico e personalizzare i contenuti. Puoi scegliere di accettare o rifiutare i cookie tramite il banner in basso a destra. Per maggiori dettagli consulta la nostra informativa completa.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-4 text-sm text-muted-foreground">
+                  <p>
+                    I cookie sono piccoli file di testo che vengono salvati sul tuo dispositivo quando visiti un sito web. Utilizziamo cookie tecnici necessari al funzionamento del sito e cookie analitici per raccogliere dati aggregati sull'utilizzo della piattaforma. Puoi modificare le tue preferenze in qualsiasi momento.
+                  </p>
+                  <ul className="list-disc pl-5 mt-2">
+                    <li><b>Cookie tecnici:</b> necessari per il funzionamento del sito.</li>
+                    <li><b>Cookie analitici:</b> ci aiutano a capire come viene utilizzato il sito.</li>
+                  </ul>
+                  <p className="mt-2">
+                    Per ulteriori informazioni consulta la nostra <a href="/privacy" className="underline text-primaryBlue">Privacy Policy</a>.
+                  </p>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </>;
+        })()}
       </body>
     </html>
   );

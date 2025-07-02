@@ -2,16 +2,8 @@
 
 import * as React from "react";
 import {
-  ArrowUpCircleIcon,
-  CameraIcon,
-  ClipboardListIcon,
-  DatabaseIcon,
-  FileCodeIcon,
-  FileIcon,
-  FileTextIcon,
   HelpCircleIcon,
   LayoutDashboardIcon,
-  SettingsIcon,
 } from "lucide-react";
 
 import { MessageCircleIcon } from "lucide-react";
@@ -21,20 +13,19 @@ import {
   ChartBarIcon as IconaAnnunci,
   CalendarDaysIcon as IconaCalendario,
   UsersIcon as IconaUtenti,
+  LockClosedIcon as IconaPrivacy,
+  
 } from "@heroicons/react/24/outline";
 
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 
@@ -63,10 +54,16 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
 
   const navSecondary = [
     {
+      title: "Privacy & Cookie Policy",
+      url: "/privacy",
+      icon: IconaPrivacy,
+    },
+    {
       title: "Get Help",
       url: "/get-help",
       icon: HelpCircleIcon,
     },
+  
   ];
 
   return (
