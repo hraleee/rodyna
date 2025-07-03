@@ -2,14 +2,27 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import LoaderPulseCircle from "@/components/Loader/loader-motion";
 
 export default function Page() {
   const form = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const { t, i18n } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+  const supported = ["it", "ua", "ro", "pl"];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  // Mostra loader finché non è montato o la lingua non è supportata
+  if (!mounted || !supported.includes(i18n.language)) {
+    return <LoaderPulseCircle />;
+  }
 
   const handleSend = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,14 +61,14 @@ export default function Page() {
         <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[400px] rounded-2xl overflow-hidden shadow-lg">
           <Image
             src="/contattaci.jpg"
-            alt="Contattaci Rodyna"
+            alt={t("contattaci_hero_alt")}
             fill
             className="object-cover"
             priority
           />
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center px-4">
             <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold text-center drop-shadow-lg">
-              Contattaci
+              {t("contattaci_title")}
             </h1>
           </div>
         </div>
@@ -75,26 +88,26 @@ export default function Page() {
       >
         <Card className="px-4 py-6 sm:p-6 bg-white/80 backdrop-blur-md border-0 shadow-lg">
           <CardContent className="space-y-4">
-            <h2 className="text-2xl font-bold text-primary">Dove siamo</h2>
+            <h2 className="text-2xl font-bold text-primary">{t("dove_siamo")}</h2>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-              📍 Via Trieste, 92, 80038 Pomigliano d'Arco (NA), Italia
+              📍 {t("indirizzo")}
             </p>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-              📞 Telefono: {" "}
+              📞 {t("telefono")}: {" "}
               <a
                 href="tel:+393318571453"
                 className="text-blue-600 hover:underline"
               >
-                331 857 1453
+                {t("telefono_numero")}
               </a>
             </p>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-              📧 Email: {" "}
+              📧 {t("email")}: {" "}
               <a
                 href="mailto:info@rodyna.it"
                 className="text-blue-600 hover:underline"
               >
-                info@rodyna.it
+                {t("email_valore")}
               </a>
             </p>
           </CardContent>
@@ -115,15 +128,15 @@ export default function Page() {
       >
         <Card className="px-4 py-6 sm:p-6 bg-white/80 backdrop-blur-md border-0 shadow-lg">
           <CardContent>
-            <h2 className="text-2xl font-bold mb-4">Orari di apertura</h2>
+            <h2 className="text-2xl font-bold mb-4">{t("orari_apertura")}</h2>
             <ul className="text-muted-foreground text-sm sm:text-base space-y-1">
-              <li>Lunedì: 09:00 – 20:00</li>
-              <li>Martedì: 08:30 – 20:00</li>
-              <li>Mercoledì: 08:30 – 20:00</li>
-              <li>Giovedì: 08:30 – 20:00</li>
-              <li>Venerdì: 08:30 – 20:00</li>
-              <li>Sabato: 08:30 – 20:00</li>
-              <li>Domenica: 08:30 – 14:00</li>
+              <li>{t("lunedi")}</li>
+              <li>{t("martedi")}</li>
+              <li>{t("mercoledi")}</li>
+              <li>{t("giovedi")}</li>
+              <li>{t("venerdi")}</li>
+              <li>{t("sabato")}</li>
+              <li>{t("domenica")}</li>
             </ul>
           </CardContent>
         </Card>
@@ -143,12 +156,12 @@ export default function Page() {
       >
         <Card className="px-4 py-8 sm:p-10 bg-gradient-to-br from-primaryBlue/10 to-pink-100 border-0 shadow-2xl">
           <CardContent>
-            <h2 className="text-2xl font-bold mb-4 text-primary">Scrivici un messaggio</h2>
+            <h2 className="text-2xl font-bold mb-4 text-primary">{t("scrivici_un_messaggio")}</h2>
             <form ref={form} onSubmit={handleSend} className="space-y-6">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <label htmlFor="name" className="block text-sm font-medium">
-                    Nome
+                    {t("nome")}
                   </label>
                   <input
                     type="text"
@@ -160,7 +173,7 @@ export default function Page() {
                 </div>
                 <div className="flex-1">
                   <label htmlFor="email" className="block text-sm font-medium">
-                    Email
+                    {t("email")}
                   </label>
                   <input
                     type="email"
@@ -173,7 +186,7 @@ export default function Page() {
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium">
-                  Messaggio
+                  {t("messaggio")}
                 </label>
                 <textarea
                   id="message"
@@ -188,13 +201,13 @@ export default function Page() {
                 className="bg-primaryBlue text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-60 text-lg shadow-md"
                 disabled={loading}
               >
-                {loading ? 'Invio in corso...' : 'Invia'}
+                {loading ? t("invio_in_corso") : t("invia")}
               </button>
               {success && (
-                <p className="text-green-600 font-medium mt-2">Messaggio inviato con successo!</p>
+                <p className="text-green-600 font-medium mt-2">{t("messaggio_inviato_successo")}</p>
               )}
               {error && (
-                <p className="text-red-600 font-medium mt-2">{error}</p>
+                <p className="text-red-600 font-medium mt-2">{t("errore_invio")}</p>
               )}
             </form>
           </CardContent>
@@ -215,7 +228,7 @@ export default function Page() {
       >
         <Card className="px-4 py-6 sm:p-6 bg-white/80 backdrop-blur-md border-0 shadow-lg">
           <CardContent>
-            <h2 className="text-2xl font-bold mb-4">Mappa</h2>
+            <h2 className="text-2xl font-bold mb-4">{t("mappa")}</h2>
             <div className="rounded-xl overflow-hidden shadow-lg">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.798390964771!2d14.39331621567924!3d40.904545379313655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133ba9d6bb40db87%3A0xa7dbbd25a032fcde!2sVia%20Trieste%2C%2092%2C%2080000%20Pomigliano%20d'Arco%20NA!5e0!3m2!1sit!2sit!4v1718710025475!5m2!1sit!2sit"
@@ -233,7 +246,7 @@ export default function Page() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Apri in Google Maps
+                {t("apri_google_maps")}
               </a>
             </p>
           </CardContent>

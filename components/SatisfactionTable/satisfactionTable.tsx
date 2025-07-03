@@ -1,10 +1,12 @@
 "use client";
 import { useEffect } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export function SatisfactionTable() {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.floor(latest));
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const controls = animate(count, 12359, { duration: 2, ease: "easeOut" });
@@ -16,8 +18,8 @@ export function SatisfactionTable() {
       <table className="w-full text-center text-primary">
         <thead>
           <tr className="bg-primaryBlue text-white">
-            <th className="py-3 px-4 text-lg font-semibold">Statistiche Clienti</th>
-            <th className="py-3 px-4 text-lg font-semibold md:hidden">Valore</th>
+            <th className="py-3 px-4 text-lg font-semibold">{t("statistiche_clienti")}</th>
+            <th className="py-3 px-4 text-lg font-semibold md:hidden">{t("valore")}</th>
           </tr>
         </thead>
         <tbody>
@@ -25,12 +27,12 @@ export function SatisfactionTable() {
   <tr className="hidden md:table-row">
     <td colSpan={2} className="py-8 px-4 font-bold text-6xl text-[#1a237e] text-center">
       <motion.span>{rounded}</motion.span>
-      <div className="text-2xl font-medium text-gray-700 mt-4">Clienti Soddisfatti</div>
+      <div className="text-2xl font-medium text-gray-700 mt-4">{t("clienti_soddisfatti")}</div>
     </td>
   </tr>
   {/* Riga mobile: classica */}
   <tr className="md:hidden border-t border-blue-100 hover:bg-blue-50 transition">
-    <td className="py-4 px-4 font-medium">Clienti Soddisfatti</td>
+    <td className="py-4 px-4 font-medium">{t("clienti_soddisfatti")}</td>
     <td className="py-4 px-4 font-bold text-2xl text-[#1a237e] md:hidden">
       <motion.span>{rounded}</motion.span>
     </td>

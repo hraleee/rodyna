@@ -3,8 +3,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 import useEmblaCarousel from 'embla-carousel-react';
+import { useTranslation } from "react-i18next";
+import LoaderPulseCircle from "@/components/Loader/loader-motion";
 
 export default function Page() {
+  const { t, i18n } = useTranslation();
+
+  const [mounted, setMounted] = useState(false);
+  const supported = ["it", "ua", "ro", "pl"];
+
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  // Mostra loader finché non è montato o la lingua non è supportata
+  if (!mounted || !supported.includes(i18n.language)) {
+    return <LoaderPulseCircle />;
+  }
+
   return (
     <main className="flex flex-col gap-12 py-12 px-4 md:px-8 max-w-5xl mx-auto bg-gradient-to-br from-blue-50 via-white to-pink-50 rounded-3xl shadow-xl">
       <motion.h1
@@ -13,7 +29,7 @@ export default function Page() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
-        Chi siamo
+        {t("chi_siamo_title")}
       </motion.h1>
 
       {/* Card descrizione negozio */}
@@ -26,16 +42,16 @@ export default function Page() {
         <Card className="text-lg bg-white/80 backdrop-blur-md border-0 shadow-lg">
           <CardContent className="space-y-6 py-8 px-6">
             <p className="leading-relaxed text-muted-foreground text-xl">
-              Siamo un negozio di alimentari specializzato nei prodotti dell'Est Europa, nato nel 2010 dalla passione di due ragazze ucraine che hanno voluto portare un pezzo della loro terra in Italia.
+              {t("chi_siamo_descr1")}
             </p>
             <p className="leading-relaxed text-muted-foreground text-xl">
-              Da oltre un decennio, offriamo ai nostri clienti una selezione autentica di prodotti tradizionali: salumi, formaggi, dolci, conserve e bevande provenienti da Polonia, Ucraina, Romania, Moldavia e Georgia.
+              {t("chi_siamo_descr2")}
             </p>
             <p className="leading-relaxed text-muted-foreground text-xl">
-              Il nostro obiettivo è creare un punto di riferimento per le comunità dell'Est Europa che vivono in Italia, ma anche per chiunque voglia scoprire i sapori genuini e ricchi di storia di queste terre.
+              {t("chi_siamo_descr3")}
             </p>
             <p className="leading-relaxed text-muted-foreground text-xl">
-              Vieni a trovarci e lasciati trasportare in un viaggio gastronomico fatto di tradizione, cultura e autenticità.
+              {t("chi_siamo_descr4")}
             </p>
           </CardContent>
         </Card>
@@ -55,23 +71,23 @@ export default function Page() {
       >
         <Card className="bg-gradient-to-b from-blue-700 to-yellow-300 border-0 shadow-2xl">
           <CardContent>
-            <h2 className="text-3xl font-semibold mb-8 text-center text-white drop-shadow">Le nostre fondatrici</h2>
+            <h2 className="text-3xl font-semibold mb-8 text-center text-white drop-shadow">{t("fondatrici_title")}</h2>
             <div className="flex flex-col sm:flex-row gap-8">
               <motion.div
                 whileHover={{ scale: 1.04, rotate: -2 }}
                 className="flex-1 bg-white/90 rounded-2xl p-8 text-primary shadow-lg border border-blue-100 flex flex-col items-center transition-all"
               >
                 <div className="w-20 h-20 rounded-full bg-primaryBlue flex items-center justify-center text-3xl font-bold text-white shadow-lg mb-3 border-4 border-blue-700">L</div>
-                <h3 className="text-2xl font-bold mb-2">Lidiya <span className="ml-2 px-2 py-1 text-xs rounded bg-blue-700 text-white font-semibold">Co-founder</span></h3>
-                <p className="text-center text-lg">Originaria di Zališčyky, Lidiya ha sempre avuto una grande passione per la cucina tradizionale ucraina. È la mente dietro la selezione dei prodotti più autentici e genuini.</p>
+                <h3 className="text-2xl font-bold mb-2">{t("fondatrice1_nome")} <span className="ml-2 px-2 py-1 text-xs rounded bg-blue-700 text-white font-semibold">{t("fondatrice1_ruolo")}</span></h3>
+                <p className="text-center text-lg">{t("fondatrice1_descr")}</p>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.04, rotate: 2 }}
                 className="flex-1 bg-white/90 rounded-2xl p-8 text-primary shadow-lg border border-blue-100 flex flex-col items-center transition-all"
               >
                 <div className="w-20 h-20 rounded-full bg-primaryBlue flex items-center justify-center text-3xl font-bold text-white shadow-lg mb-3 border-4 border-yellow-300">S</div>
-                <h3 className="text-2xl font-bold mb-2">Svetlana <span className="ml-2 px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700 font-semibold">Co-founder</span></h3>
-                <p className="text-center text-lg">Nata a Zališčyky, Svetlana si occupa della gestione del negozio e dell'accoglienza dei clienti, sempre con il sorriso e la voglia di far sentire tutti a casa.</p>
+                <h3 className="text-2xl font-bold mb-2">{t("fondatrice2_nome")} <span className="ml-2 px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700 font-semibold">{t("fondatrice2_ruolo")}</span></h3>
+                <p className="text-center text-lg">{t("fondatrice2_descr")}</p>
               </motion.div>
             </div>
           </CardContent>
@@ -93,7 +109,7 @@ export default function Page() {
         <Card className="bg-gradient-to-r from-blue-700 to-yellow-400 text-white text-center py-12 border-0 shadow-xl">
           <CardContent>
             <p className="text-2xl italic font-semibold max-w-xl mx-auto drop-shadow-lg">
-              "Portiamo i sapori dell'Est Europa nel cuore dell'Italia, con amore, tradizione e autenticità."
+              {t("motto")}
             </p>
           </CardContent>
         </Card>
@@ -113,7 +129,7 @@ export default function Page() {
       >
         <Card className="mt-8 bg-white/90 border-0 shadow-2xl">
           <CardContent>
-            <h2 className="text-3xl font-semibold mb-8 text-center text-primary drop-shadow">Cosa dicono i nostri clienti</h2>
+            <h2 className="text-3xl font-semibold mb-8 text-center text-primary drop-shadow">{t("recensioni_title")}</h2>
             <ReviewsCarouselModern />
           </CardContent>
         </Card>
@@ -124,59 +140,60 @@ export default function Page() {
 
 // Carousel moderno con Embla
 function ReviewsCarouselModern() {
+  const { t } = useTranslation();
   const reviews = [
     {
-      name: "Yulia Hudz",
-      date: "5 mesi fa",
-      text: "Negozio 🔝 💯 per la qualità e l'assortimento dei prodotti. Birre e altre bibite, cioccolato, tisane, salumi e 'chi più ne ha, più ne metta'. A 'ogni ben di Dio' si aggiunge la professionalità, la cortesia, la disponibilità del personale e la pulizia del negozio 💯💯💯",
+      name: t("review_1_name"),
+      date: t("review_1_date"),
+      text: t("review_1_text"),
       stars: 5,
     },
     {
-      name: "Kirill Maksiuta",
-      date: "9 mesi fa",
-      text: "Negozio ben fornito, personale gentile e disponibile. Consigliatissimo!!!",
+      name: t("review_2_name"),
+      date: t("review_2_date"),
+      text: t("review_2_text"),
       stars: 5,
     },
     {
-      name: "Taras Vayda",
-      date: "2 anni fa",
-      text: "Negozio ben fornito, personale molto educato e gentile. Prodotti sempre freschi, prezzo alla qualità. Consigliatissimo",
+      name: t("review_3_name"),
+      date: t("review_3_date"),
+      text: t("review_3_text"),
       stars: 5,
     },
     {
-      name: "Олег Чорний",
-      date: "2 anni fa",
-      text: "Da quando ho iniziato a frequentare spesso questo negozio trovo sempre prodotti freschissimi, di qualità e con prezzo conveniente. Il negozio è ben organizzato e sistemato, le commesse sono molto cortesi. Vi consiglio vivamente di andarci!!",
+      name: t("review_4_name"),
+      date: t("review_4_date"),
+      text: t("review_4_text"),
       stars: 5,
     },
     {
-      name: "Mariya Hudz",
-      date: "5 mesi fa",
-      text: "Personale gentilissimo. Prodotti di qualità 👌🏻👌🏻👌🏻",
+      name: t("review_5_name"),
+      date: t("review_5_date"),
+      text: t("review_5_text"),
       stars: 5,
     },
     {
-      name: "Olga D.",
-      date: "1 anno fa",
-      text: "Un negozio bellissimo, pieno di prodotti ricercati e introvabili altrove... La ragazza è gentilissima e disponibile. Lo consiglio vivamente.",
+      name: t("review_6_name"),
+      date: t("review_6_date"),
+      text: t("review_6_text"),
       stars: 5,
     },
     {
-      name: "Василь",
-      date: "2 anni fa",
-      text: "Sono più che soddisfatto. Prezzi ottimi, commesse molto gentili. Prodotti freschi e di qualità, c'è tutto e di più. Raccomando a tutti!!",
+      name: t("review_7_name"),
+      date: t("review_7_date"),
+      text: t("review_7_text"),
       stars: 5,
     },
     {
-      name: "Scuola Formazione 5",
-      date: "4 anni fa",
-      text: "Complimenti, un negozio ben gestito con prezzi giusti e convenienti. Si trovano prodotti originali della Polonia, Ucraina, Moldavia, Romania ecc. ecc. Le ragazze che lo gestiscono sono molto gentili.",
+      name: t("review_8_name"),
+      date: t("review_8_date"),
+      text: t("review_8_text"),
       stars: 5,
     },
     {
-      name: "Іван Лазар",
-      date: "4 anni fa",
-      text: "Personale molto cordiale ed accogliente, una grande scelta dei prodotti sempre freschi. Raccomando a tutti!",
+      name: t("review_9_name"),
+      date: t("review_9_date"),
+      text: t("review_9_text"),
       stars: 5,
     },
   ];

@@ -21,18 +21,19 @@ const MapStore = dynamic(
 );
 
 export default function Home() {
-  const categories = [
-    { title: "Salumi & Formaggi", img: "/salumi.jpg" },
-    { title: "Pane & Dolci", img: "/dolci.jpg" },
-    { title: "Conserve & Sottaceti", img: "/conserve.jpg" },
-    { title: "Alcolici", img: "/alcolici.jpg" },
-    { title: "Bevande", img: "/bevande.jpg" },
-    { title: "Snack & Specialità", img: "/snack.jpg" },
-  ];
-
   const { t, i18n } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const supported = ["it", "ua", "ro", "pl"];
+
+  const categories = [
+    { title: t("salumi_e_formaggi"), img: "/salumi.jpg" },
+    { title: t("pane_e_dolci"), img: "/dolci.jpg" },
+    { title: t("conserve_e_sottaceti"), img: "/conserve.jpg" },
+    { title: t("alcolici"), img: "/alcolici.jpg" },
+    { title: t("bevande"), img: "/bevande.jpg" },
+    { title: t("snack_e_specialita"), img: "/snack.jpg" },
+  ];
+  
 
   useEffect(() => {
     setMounted(true);
@@ -59,7 +60,7 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black/20 flex items-center justify-center px-4">
             <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center drop-shadow-lg">
-              RODYNA
+            {t("rodyna")}
             </h1>
           </div>
         </div>
@@ -92,16 +93,10 @@ export default function Home() {
             {t("home_hero_title")}
             </h2>
             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-              Siamo un punto di riferimento per chi cerca prodotti genuini,
-              tradizionali e di alta qualità provenienti da Polonia, Ucraina,
-              Romania, Moldavia e Georgia. Da noi trovi tutto ciò che ti fa
-              sentire a casa: salumi affumicati, formaggi artigianali, conserve
-              fatte come una volta, dolci tipici e bevande uniche.
+            {t("home_hero_paragraph1")}
             </p>
             <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-              Il nostro negozio nasce per servire le comunità dell'Est Europa che
-              vivono in Italia, ma è aperto a chiunque voglia scoprire i sapori
-              autentici e ricchi di storia di queste terre.
+            {t("home_hero_paragraph2")}
             </p>
           </CardContent>
         </Card>
@@ -121,7 +116,7 @@ export default function Home() {
       >
         <Card className="px-4 py-8 sm:p-10 bg-white/80 backdrop-blur-md border-0 shadow-lg">
           <CardContent>
-            <h2 className="text-2xl font-semibold mb-4 text-primary">Categorie di prodotti</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-primary">{t("categorie")}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {categories.map((item, i) => (
                 <motion.div
@@ -163,36 +158,36 @@ export default function Home() {
           <CardContent>
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-primary">
               <svg xmlns='http://www.w3.org/2000/svg' className='h-7 w-7 text-blue-500' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' /></svg>
-              Ultime novità & offerte
+              {t("ultime_novita_e_offerte")}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Array statico di offerte/novità */}
               {[
                 {
-                  title: "Sconto 20% su Salumi Polacchi",
-                  desc: "Solo per questa settimana, tutti i salumi dalla Polonia a prezzo speciale!",
+                  title: t("sconto_pol"),
+                  desc: t("sconto_desc_pol"),
                   icon: (
                     <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 1.343-3 3 0 1.657 1.343 3 3 3s3-1.343 3-3c0-1.657-1.343-3-3-3zm0 0V4m0 16v-4m8-4h-4m-8 0H4" /></svg>
                   ),
                   highlight: "-20%",
                 },
                 {
-                  title: "Nuovo arrivo: dolci georgiani!",
-                  desc: "Scopri la nostra selezione di dolci tipici dalla Georgia, freschi ogni settimana.",
+                  title: t("sconto_georgiani"),
+                  desc: t("sconto_desc_georgiani"),
                   icon: (
                     <svg className="w-8 h-8 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12.1 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54l-1.35 1.31z" />
                     </svg>
                   ),
-                  highlight: "Novità!",
+                  highlight: t("novita_georgiani"),
                 },
                 {
-                  title: "Conserve artigianali in offerta",
-                  desc: "Acquista le nostre conserve, sconti validi solo fino a fine mese.",
+                  title: t("sconto_cons_artigianali"),
+                  desc: t("sconto_desc_cons_artigianali"),
                   icon: (
                     <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   ),
-                  highlight: "Sconto!",
+                  highlight: t("sconto_cons_artigianali_highlight"),
                 },
               ].map((offer, i) => (
                 <div key={i} className="flex flex-col items-start bg-white rounded-2xl shadow-md p-6 gap-3 border border-blue-100 hover:shadow-lg transition">
@@ -223,7 +218,7 @@ export default function Home() {
       >
         <Card className="px-4 py-8 sm:p-10 bg-white/80 backdrop-blur-md border-0 shadow-lg">
           <CardContent>
-            <h2 className="text-2xl font-semibold mb-4 text-primary">Dove ci trovi</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-primary">{t("dove_ci_trovi")}</h2>
             <div className="rounded-xl overflow-hidden shadow-lg">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.798390964771!2d14.39331621567924!3d40.904545379313655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133ba9d6bb40db87%3A0xa7dbbd25a032fcde!2sVia%20Trieste%2C%2092%2C%2080000%20Pomigliano%20d'Arco%20NA!5e0!3m2!1sit!2sit!4v1718710025475!5m2!1sit!2sit"
@@ -241,7 +236,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Apri in Google Maps
+                {t("google_maps")}
               </a>
             </p>
           </CardContent>
