@@ -3,40 +3,44 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// GET prodotto by barcode
-export async function GET(req: NextRequest, context: { params: { barcode: string } }) {
-  const { barcode } = await context.params;
-  if (!barcode) {
-    return NextResponse.json({ message: "Barcode mancante" }, { status: 400 });
-  }
-  const prodotto = await prisma.prodotto.findUnique({ where: { barcode } });
-  if (!prodotto) {
-    return NextResponse.json({ message: "Prodotto non trovato" }, { status: 404 });
-  }
-  return NextResponse.json(prodotto);
-}
-
-// PUT aggiorna prodotto by barcode (estrae barcode dall'URL)
-export async function PUT(req: NextRequest) {
-  // Estrai barcode dall'URL
+// Estrai barcode dalla URL
+function getBarcodeFromRequest(req: NextRequest) {
   const url = new URL(req.url);
   const parts = url.pathname.split("/");
-  const barcode = parts[parts.length - 1];
+  return parts[parts.length - 1];
+}
 
+// GET prodotto by barcode
+export async function GET(req: NextRequest) {
+  const barcode = getBarcodeFromRequest(req);
   if (!barcode) {
     return NextResponse.json({ message: "Barcode mancante" }, { status: 400 });
   }
   try {
-    const data = await req.json();
-    // Rimuovi barcode da data, se presente
-    const { barcode: _barcode, ...updateData } = data;
+    const prodotto = await prisma.prodotto.findUnique({ where: { barcode } });
+    if (!prodotto) {
+      return NextResponse.json({ message: "Prodotto non trovato" }, { status: 404 });
+    }
+    return NextResponse.json(prodotto);
+  } catch (error) {
+    return NextResponse.json({ message: "Errore nella ricerca", error: String(error) }, { status: 500 });
+  }
+}
+
+// PUT aggiorna prodotto by barcode
+export async function PUT(req: NextRequest) {
+  const barcode = getBarcodeFromRequest(req);
+  if (!barcode) {
+    return NextResponse.json({ message: "Barcode mancante" }, { status: 400 });
+  }
+  const data = await req.json();
+  try {
     const prodotto = await prisma.prodotto.update({
       where: { barcode },
-      data: updateData,
+      data,
     });
-    return NextResponse.json({ message: "Prodotto aggiornato", prodotto });
+    return NextResponse.json(prodotto);
   } catch (error) {
-    console.error("Errore nell'aggiornamento prodotto:", error);
     return NextResponse.json({ message: "Errore nell'aggiornamento", error: String(error) }, { status: 500 });
   }
 }
@@ -62,18 +66,12 @@ export async function POST(req: NextRequest) {
 
 // DELETE elimina prodotto by barcode
 export async function DELETE(req: NextRequest) {
-  // Estrai barcode dall'URL
-  const url = new URL(req.url);
-  const parts = url.pathname.split("/");
-  const barcode = parts[parts.length - 1];
-
+  const barcode = getBarcodeFromRequest(req);
   if (!barcode) {
     return NextResponse.json({ message: "Barcode mancante" }, { status: 400 });
   }
   try {
-    await prisma.prodotto.delete({
-      where: { barcode },
-    });
+    await prisma.prodotto.delete({ where: { barcode } });
     return NextResponse.json({ message: "Prodotto eliminato" });
   } catch (error) {
     return NextResponse.json({ message: "Errore nell'eliminazione", error: String(error) }, { status: 500 });
