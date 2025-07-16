@@ -63,7 +63,12 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
       url: "/get-help",
       icon: HelpCircleIcon,
     },
-  
+    // Area Riservata
+    {
+      title: "Area Riservata",
+      url: "/area-riservata",
+      icon: IconaPrivacy,
+    },
   ];
 
   return (
