@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import LoaderPulseCircle from "@/components/Loader/loader-motion";
 
 export default function ListaProdotti() {
@@ -9,6 +9,8 @@ export default function ListaProdotti() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selected, setSelected] = useState<any | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch("/api/categorie")
@@ -64,10 +66,10 @@ export default function ListaProdotti() {
         <table className="min-w-full border rounded shadow text-sm">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-2 text-left">Barcode</th>
-              <th className="px-4 py-2 text-left">Nome</th>
-              <th className="px-4 py-2 text-left">Categoria</th>
-              <th className="px-4 py-2 text-left">Prezzo</th>
+              <th className="px-2 py-2 text-left w-32 md:w-auto">Barcode</th>
+              <th className="px-2 py-2 text-left w-32 md:w-auto">Nome</th>
+              <th className="px-2 py-2 text-left w-24 md:w-auto">Categoria</th>
+              <th className="px-2 py-2 text-left w-20 md:w-auto">Prezzo</th>
             </tr>
           </thead>
           <tbody>
@@ -77,16 +79,56 @@ export default function ListaProdotti() {
               </tr>
             )}
             {prodotti.map((p) => (
-              <tr key={p.barcode} className="border-b hover:bg-primaryBlue/10 transition">
-                <td className="px-4 py-2 font-mono max-w-[120px] truncate md:max-w-none" title={p.barcode}>{p.barcode}</td>
-                <td className="px-4 py-2">{p.nome}</td>
-                <td className="px-4 py-2">{p.categoria?.nome || "-"}</td>
-                <td className="px-4 py-2">{p.prezzo} €</td>
+              <tr
+                key={p.barcode}
+                className="border-b hover:bg-primaryBlue/10 transition cursor-pointer"
+                onClick={() => setSelected(p)}
+              >
+                <td className="px-2 py-2 font-mono max-w-[90px] truncate md:max-w-none md:px-4" title={p.barcode}>
+                  <span className="block md:hidden text-xs truncate" style={{maxWidth:'80px'}}>{p.barcode}</span>
+                  <span className="hidden md:block">{p.barcode}</span>
+                </td>
+                <td className="px-2 py-2 max-w-[90px] truncate md:max-w-none md:px-4" title={p.nome}>
+                  <span className="block md:hidden text-xs truncate" style={{maxWidth:'80px'}}>{p.nome}</span>
+                  <span className="hidden md:block">{p.nome}</span>
+                </td>
+                <td className="px-2 py-2 md:px-4">
+                  <span className="block md:hidden text-xs truncate" style={{maxWidth:'70px'}}>{p.categoria?.nome || "-"}</span>
+                  <span className="hidden md:block">{p.categoria?.nome || "-"}</span>
+                </td>
+                <td className="px-2 py-2 md:px-4">
+                  <span className="block md:hidden text-xs">{p.prezzo} €</span>
+                  <span className="hidden md:block">{p.prezzo} €</span>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {/* Modal dettagli prodotto */}
+      {selected && (
+        <div
+          ref={modalRef}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-2"
+          onClick={e => { if (e.target === modalRef.current) setSelected(null); }}
+        >
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative animate-fade-in">
+            <button
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl font-bold"
+              onClick={() => setSelected(null)}
+              aria-label="Chiudi"
+            >
+              ×
+            </button>
+            <h2 className="text-xl font-bold mb-4 text-primaryBlue">Dettagli Prodotto</h2>
+            <div className="mb-2"><b>Barcode:</b> <span className="font-mono break-all">{selected.barcode}</span></div>
+            <div className="mb-2"><b>Nome:</b> {selected.nome}</div>
+            <div className="mb-2"><b>Descrizione:</b> {selected.descrizione || <span className="italic text-gray-400">Nessuna</span>}</div>
+            <div className="mb-2"><b>Categoria:</b> {selected.categoria?.nome || "-"}</div>
+            <div className="mb-2"><b>Prezzo:</b> {selected.prezzo} €</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 

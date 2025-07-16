@@ -34,13 +34,16 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ message: "Barcode mancante" }, { status: 400 });
   }
   const data = await req.json();
+  // Rimuovi barcode dal body
+  const { barcode: _barcode, ...updateData } = data;
   try {
     const prodotto = await prisma.prodotto.update({
       where: { barcode },
-      data,
+      data: updateData, // usa solo i campi aggiornabili!
     });
     return NextResponse.json(prodotto);
   } catch (error) {
+    console.error("Errore nell'aggiornamento prodotto:", error);
     return NextResponse.json({ message: "Errore nell'aggiornamento", error: String(error) }, { status: 500 });
   }
 }
