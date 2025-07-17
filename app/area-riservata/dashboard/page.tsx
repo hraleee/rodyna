@@ -18,18 +18,26 @@ export default function AdminDashboardHome() {
     setError("");
     setResult(null);
     setLoading(true);
-    const res = await fetch(`/api/prodotti/${barcode}`);
+    const currentBarcode = barcode; // salva il valore attuale
+    const res = await fetch(`/api/prodotti/${currentBarcode}`);
     setLoading(false);
     if (res.ok) {
       setResult(await res.json());
+      setBarcode(currentBarcode); // aggiorna sempre il campo barcode con quello cercato
     } else {
       setError("Prodotto non trovato");
+      setBarcode(currentBarcode); // aggiorna comunque il campo barcode
     }
   }
 
   function handleBarcodeScanned(scanned: string) {
     setBarcode(scanned);
     setShowScanner(false);
+    // Avvia subito la ricerca
+    setTimeout(() => {
+      const fakeEvent = { preventDefault: () => {} };
+      handleSearch(fakeEvent as any);
+    }, 0);
   }
 
   return (
