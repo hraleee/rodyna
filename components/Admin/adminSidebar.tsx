@@ -1,8 +1,8 @@
 "use client";
 import { logout } from "@/app/actions/auth";
-import { deleteSession } from "@/lib/session";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const links = [
   { href: "/area-riservata/dashboard", label: "Home" },
@@ -14,12 +14,14 @@ const links = [
 
 export default function AdminSidebar({ open, setOpen }: { open: boolean, setOpen: (v: boolean) => void }) {
   const pathname = usePathname();
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   async function handleLogout() {
+    setLoading(true);
     await logout();
+    setLoading(false);
   }
-  
+
   return (
     <>
       {/* Bottone hamburger solo su mobile, sempre visibile (ora gestito dal layout) */}
@@ -55,9 +57,10 @@ export default function AdminSidebar({ open, setOpen }: { open: boolean, setOpen
         </nav>
         <button
           onClick={handleLogout}
-          className="mt-8 w-full bg-red-100 text-red-700 py-2 rounded font-semibold hover:bg-red-200"
+          className="mt-8 w-full bg-red-100 text-red-700 py-2 rounded font-semibold hover:bg-red-200 disabled:opacity-60"
+          disabled={loading}
         >
-          Logout
+          {loading ? "Logout..." : "Logout"}
         </button>
       </aside>
     </>

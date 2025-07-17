@@ -16,5 +16,6 @@ export async function POST(req: NextRequest) {
   }
   // CREA IL TOKEN E IL COOKIE
   await createSession(user.id);
+  
   return NextResponse.json({ message: "Login ok" });
 } 

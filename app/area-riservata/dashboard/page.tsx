@@ -33,7 +33,7 @@ export default function AdminDashboardHome() {
   }
 
   return (
-    <div className="max-w-xl mx-auto mt-10">
+    <div className="max-w-xl mx-auto mt-2 md:mt-10">
       {loading && <LoaderPulseCircle text="Caricamento..." />}
       <h1 className="text-2xl font-bold mb-6">Ricerca prodotto per barcode</h1>
       <form onSubmit={handleSearch} className="flex gap-2 mb-4 relative">

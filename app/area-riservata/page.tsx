@@ -51,7 +51,7 @@ export default function AreaRiservata() {
             type="text"
             className="w-full border rounded px-3 py-2"
             value={username}
-            onChange={e => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value.toLowerCase())}
             required
           />
         </div>
