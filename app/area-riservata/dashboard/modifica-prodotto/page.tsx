@@ -11,6 +11,7 @@ export default function ModificaProdotto() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     fetch("/api/categorie")
@@ -59,6 +60,41 @@ export default function ModificaProdotto() {
     }
   }
 
+  function handleDeleteClick() {
+    setShowConfirm(true);
+  }
+
+  async function handleConfirm() {
+    setShowConfirm(false);
+    setError("");
+    setSuccess(false);
+    setLoading(true);
+    const res = await fetch(`/api/prodotti/${barcode}`, { method: "DELETE" });
+    setLoading(false);
+    if (res.ok) {
+      setProdotto(null);
+      setBarcode("");
+      setSuccess(false);
+      setError("");
+      toast.error("Prodotto eliminato", {
+        description: `Il prodotto con barcode ${barcode} è stato eliminato!`,
+        style: { background: '#d32f2f', color: 'white' },
+        icon: '🗑️',
+      });
+    } else {
+      setError("Errore nell'eliminazione");
+      toast.error("Errore nell'eliminazione", {
+        description: `Impossibile eliminare il prodotto con barcode ${barcode}.`,
+        style: { background: '#d32f2f', color: 'white' },
+        icon: '❌',
+      });
+    }
+  }
+
+  function handleCancel() {
+    setShowConfirm(false);
+  }
+
   return (
     <div className="max-w-lg mx-auto mt-10 bg-white rounded shadow p-8">
       {loading && <LoaderPulseCircle text="Caricamento..." />}
@@ -101,34 +137,33 @@ export default function ModificaProdotto() {
           <div className="flex gap-2">
             <button type="submit" className="flex-1 bg-primaryBlue text-white py-2 rounded font-semibold hover:bg-[#283593]" disabled={loading}>Aggiorna</button>
             <button type="button" className="flex-1 bg-red-600 text-white py-2 rounded font-semibold hover:bg-red-700" disabled={loading}
-              onClick={async () => {
-                setError("");
-                setSuccess(false);
-                setLoading(true);
-                const res = await fetch(`/api/prodotti/${barcode}`, { method: "DELETE" });
-                setLoading(false);
-                if (res.ok) {
-                  setProdotto(null);
-                  setBarcode("");
-                  setSuccess(false);
-                  setError("");
-                  toast.error("Prodotto eliminato", {
-                    description: `Il prodotto con barcode ${barcode} è stato eliminato!`,
-                    style: { background: '#d32f2f', color: 'white' },
-                    icon: '🗑️',
-                  });
-                } else {
-                  setError("Errore nell'eliminazione");
-                  toast.error("Errore nell'eliminazione", {
-                    description: `Impossibile eliminare il prodotto con barcode ${barcode}.`,
-                    style: { background: '#d32f2f', color: 'white' },
-                    icon: '❌',
-                  });
-                }
-              }}
+              onClick={handleDeleteClick}
             >Elimina</button>
           </div>
         </form>
+      )}
+
+      {/* Popup di conferma */}
+      {showConfirm && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow max-w-xs w-full text-center">
+            <p className="mb-4">Sei sicuro di voler eliminare questo prodotto?</p>
+            <div className="flex justify-center gap-4">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded"
+                onClick={handleConfirm}
+              >
+                Conferma
+              </button>
+              <button
+                className="bg-gray-300 px-4 py-2 rounded"
+                onClick={handleCancel}
+              >
+                Annulla
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

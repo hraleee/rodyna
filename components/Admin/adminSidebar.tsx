@@ -1,4 +1,6 @@
 "use client";
+import { logout } from "@/app/actions/auth";
+import { deleteSession } from "@/lib/session";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -15,18 +17,7 @@ export default function AdminSidebar({ open, setOpen }: { open: boolean, setOpen
   const router = useRouter();
 
   async function handleLogout() {
-    // Cancella tutti i cookie accessibili dal client tranne 'cookie_consent'
-    if (typeof document !== "undefined") {
-      const cookies = document.cookie.split("; ");
-      for (const cookie of cookies) {
-        const eqPos = cookie.indexOf("=");
-        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        if (name == "token_jwt_rodyna") {
-          document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-        }
-      }
-    }
-    router.push('/area-riservata');
+    await logout();
   }
   
   return (
